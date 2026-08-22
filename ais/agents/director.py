@@ -197,7 +197,8 @@ class Director:
             return []
         self.stat.record(batch_id, analyses)
         findings = self.critic.review_batch(
-            batch_id, [a["uid"] for a in accepted], len(C.SEEDS), analyses)
+            batch_id, [a["uid"] for a in accepted],
+            planned_seeds=len(C.SEEDS_MEDIUM), analyses=analyses)
 
         promoted = None
         promotable = [a for a in analyses if a["decision"] == "promote"]

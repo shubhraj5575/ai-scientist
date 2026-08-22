@@ -19,8 +19,7 @@ class Critic:
         self.db = db
 
     def review_batch(self, batch_id: str, candidate_uids: list[str],
-                     planned_seeds: int, analyses: list[dict]) -> list[str]:
-        findings: list[str] = []
+                     planned_seeds: int, analyses: list[dict]) -> list[str]:        findings: list[str] = []
         for uid in candidate_uids:
             rows = self.db.query(
                 """SELECT r.*, i.name AS iname FROM runs r
@@ -35,7 +34,7 @@ class Critic:
             # completeness per instance
             by_inst: dict[str, list] = {}
             for r in rows:
-                by_inst[r["iname"]].append(r)
+                by_inst.setdefault(r["iname"], []).append(r)
             for iname, rs in sorted(by_inst.items()):
                 if len(rs) != planned_seeds:
                     findings.append(

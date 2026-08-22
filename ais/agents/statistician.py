@@ -72,12 +72,17 @@ class Statistician:
         rt = r["median_runtime_ratio"]
         rt_cap = P.max_runtime_ratio_bigwin if big_win else P.max_runtime_ratio
         rt_ok = (not np.isfinite(rt)) or rt <= rt_cap
+        harmful = sig and r["mean_delta_pp"] <= -P.min_effect_pp
         if sig and effect_ok and rt_ok:
             return "promote"
         if sig and effect_ok:
             return f"reject_on_runtime(ratio={rt:.2f}>cap={rt_cap:.2f})"
+        if harmful:
+            return "significantly_worse"
         if sig:
-            return "significant_but_not_practical"
+            if r["mean_delta_pp"] > 0:
+                return "significant_but_not_practical"
+            return "null_or_negative"
         if effect_ok:
             return "practical_but_not_significant"
         return "no_change"
