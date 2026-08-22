@@ -318,22 +318,27 @@ class Director:
                                  "n_runs": n})
         analyses = self.stat.analyse_batch(batch, accepted, accepted[0]["uid"],
                                            suites=("exact", "medium"))
-        # compare both against plain LS; promote better one as initial champion
+        # initial champion = whichever baseline has lower mean excess
         self.stat.record(batch, analyses)
-        ilsa = analyses[-1]
-        self.champion_uid = accepted[-1]["uid"]   # seed ILS starts as champion
-        self.champion_cfg = accepted[-1]["config"]
+        best_init = min(zip(accepted, analyses),
+                        key=lambda pair: pair[1]["cand_mean"])
+        self.champion_uid = best_init[0]["uid"]
+        self.champion_cfg = best_init[0]["config"]
         self._save_champion()
+        self.db.set_candidate_status(self.champion_uid, "promoted")
         self.db.decision("phase", {
             "name": "baselines",
+            "champion": self.champion_uid,
             "plain_ls_mean_excess": analyses[0]["cand_mean"],
-            "ils_mean_excess": ilsa["cand_mean"],
-            "ils_delta_pp_vs_plain": ilsa["mean_delta_pp"],
-            "p_wilcoxon": ilsa["wilcoxon_p"]})
+            "ils_mean_excess": analyses[-1]["cand_mean"],
+            "ils_delta_pp_vs_plain": analyses[-1]["mean_delta_pp"],
+            "p_wilcoxon": analyses[-1]["wilcoxon_p"]})
         self.log(
             f"baselines: plainLS={analyses[0]['cand_mean']:.2f}% "
-            f"ILS={ilsa['cand_mean']:.2f}% "
-            f"Δ={ilsa['mean_delta_pp']:+.2f}pp p={ilsa['wilcoxon_p']:.2g}")
+            f"ILS={analyses[-1]['cand_mean']:.2f}% "
+            f"Δ={analyses[-1]['mean_delta_pp']:+.2f}pp "
+            f"p={analyses[-1]['wilcoxon_p']:.2g} "
+            f"→ champion={self.champion_uid}")
         return analyses
 
     def phase_ofat(self, k_new: int = 5):
