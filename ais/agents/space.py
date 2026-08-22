@@ -64,10 +64,9 @@ def validate(cfg: dict) -> list[str]:
         if val not in allowed:
             errs.append(f"{key}={val!r} not in {allowed}")
     # cross-field constraints
-    if cfg.get("perturbation") in (None, "double_bridge") and \
-            cfg.get("perturb_strength") not in (None, 1) and \
-            cfg.get("perturbation") is None:
-        errs.append("strength set without perturbation")
+    if cfg.get("perturbation") in (None, "none") and \
+            cfg.get("perturb_strength") is not None:
+        errs.append("perturb_strength set without perturbation")
     if cfg.get("acceptance") == "sa" and "sa_T0_frac" not in cfg:
         errs.append("sa requires sa_T0_frac")
     return errs

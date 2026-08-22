@@ -73,6 +73,22 @@ def _key(v) -> str:
     return str(v)
 
 
+def _fill_required_params(cfg: dict):
+    """Ensure acceptance-specific parameters exist (drawn from grammar)."""
+    acc = cfg.get("acceptance")
+    rng = random.Random(hash(config_uid(cfg)) & 0xFFFFFFFF)
+    if acc == "sa":
+        cfg.setdefault("sa_T0_frac", rng.choice(COMPONENT_SPACE["sa_T0_frac"]))
+        cfg.setdefault("sa_alpha", rng.choice(COMPONENT_SPACE["sa_alpha"]))
+    elif acc == "lahc":
+        cfg.setdefault("lahc_L", rng.choice(COMPONENT_SPACE["lahc_L"]))
+    elif acc in ("threshold", "record_to_record"):
+        cfg.setdefault("threshold_rel",
+                       rng.choice(COMPONENT_SPACE["threshold_rel"]))
+    if cfg.get("perturbation") is None:
+        cfg.pop("perturb_strength", None)
+
+
 class Designer:
     def __init__(self, seed: int = 20260822):
         self.rng = random.Random(seed)
@@ -101,6 +117,7 @@ class Designer:
             new_val = self.rng.choice(alternatives)
             cfg = dict(champion_cfg)
             cfg[comp] = new_val
+            _fill_required_params(cfg)
             uid = config_uid(cfg)
             if uid in tried_digests or any(p.uid == uid for p in proposals):
                 continue
@@ -113,8 +130,8 @@ class Designer:
                           "while holding all other choices at champion settings.",
                 expected_effect=f"Direction unknown a priori; detectable effect "
                                 f">=0.3pp mean excess difference.",
-                prediction=f"Paired Wilcoxon on {len(mutations_done)}-factor diff: "
-                           f"p<0.05 after Holm within batch."))
+                prediction="Paired Wilcoxon on single-factor diff: "
+                           "p<0.05 after Holm within batch."))
 
         # --- family 2: untried literature priors --------------------------
         prior_pool = [
@@ -156,11 +173,13 @@ class Designer:
                 cfg[comp] = val
                 if comp == "perturbation" and val is None:
                     cfg.pop("perturb_strength", None)
+            _fill_required_params(cfg)
             uid = config_uid(cfg)
             if uid in tried_digests or any(p.uid == uid for p in proposals):
                 # random perturbation of one slot to escape collisions
                 comp = self.rng.choice(comps)
                 cfg[comp] = self.rng.choice(COMPONENT_SPACE[comp])
+                _fill_required_params(cfg)
                 uid = config_uid(cfg)
                 if uid in tried_digests or any(p.uid == uid for p in proposals):
                     continue
