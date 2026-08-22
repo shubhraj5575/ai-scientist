@@ -19,7 +19,8 @@ class Critic:
         self.db = db
 
     def review_batch(self, batch_id: str, candidate_uids: list[str],
-                     planned_seeds: int, analyses: list[dict]) -> list[str]:        findings: list[str] = []
+                     planned_seeds: int, analyses: list[dict]) -> list[str]:
+        findings: list[str] = []
         for uid in candidate_uids:
             rows = self.db.query(
                 """SELECT r.*, i.name AS iname FROM runs r
