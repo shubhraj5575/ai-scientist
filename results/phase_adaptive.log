@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/shubhraj/Downloads/ai scientist/scripts/run_overnight.py", line 42, in main
+    d.phase_ofat(k_new=5)
+  File "/Users/shubhraj/Downloads/ai scientist/ais/agents/director.py", line 353, in phase_ofat
+    return self.analyse_and_promote(batch, accepted, ("medium",))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubhraj/Downloads/ai scientist/ais/agents/director.py", line 199, in analyse_and_promote
+    findings = self.critic.review_batch(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubhraj/Downloads/ai scientist/ais/agents/critic.py", line 38, in review_batch
+    by_inst[r["iname"]].append(r)
+    ~~~~~~~^^^^^^^^^^^^
+KeyError: 'uniform_n50_s0'

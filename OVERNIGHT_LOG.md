@@ -16,3 +16,4 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-22T18:44:29Z** BKS bootstrap done (100 runs @ 15.0s)
 - **2026-08-22T19:12:39Z** baselines: plainLS=0.22% ILS=0.15% Δ=+0.06pp p=1.5e-08
 - **2026-08-22T19:15:58Z** campaign run started: phases=['ofat', 'explore'] budget=7.0h
+- **2026-08-22T20:01:28Z** PHASE ofat FAILED: 'uniform_n50_s0'
