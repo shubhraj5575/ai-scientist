@@ -36,3 +36,9 @@ Autonomous research campaign log. Newest entries at bottom.
   significant gain (+0.07pp, dz=0.40). Bandit now avoids perturbation=None.
   Designer extended with 'combo' family (D12): greedy assembly of arms with
   net-positive rewards to force replication attempts of moderate winners.
+- **2026-08-22T22:42:04Z** batch phase_ofat_2026-08-22T21:56:53Z: 5 analysed, 0 critiques, promotions=[]
+- **2026-08-22T22:42:04Z**   C-fea8063352 (['medium']): Δ=+0.08pp CI[+0.05,+0.12] pW=1.71e-08 dz=0.39 rt×1.00 → significant_but_not_practical
+- **2026-08-22T22:42:04Z**   C-c1f72e8082 (['medium']): Δ=+0.08pp CI[+0.05,+0.11] pW=1.71e-08 dz=0.40 rt×1.00 → significant_but_not_practical
+- **2026-08-22T22:42:04Z**   C-ca0dc0bc14 (['medium']): Δ=+0.14pp CI[+0.07,+0.20] pW=1.41e-05 dz=0.31 rt×1.00 → significant_but_not_practical
+- **2026-08-22T22:42:04Z**   C-2a678a76ff (['medium']): Δ=+0.14pp CI[+0.08,+0.21] pW=1.03e-05 dz=0.32 rt×1.00 → significant_but_not_practical
+- **2026-08-22T22:42:04Z**   C-3ac98c274c (['medium']): Δ=-0.14pp CI[-0.23,-0.05] pW=0.0077 dz=-0.23 rt×1.00 → null_or_negative
