@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/shubhraj/Downloads/ai scientist/scripts/run_overnight.py", line 16, in <module>
+    from ais.agents.director import Director  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubhraj/Downloads/ai scientist/ais/agents/director.py", line 29, in <module>
+    from .critic import Critic
+  File "/Users/shubhraj/Downloads/ai scientist/ais/agents/critic.py", line 23
+    for uid in candidate_uids:
+IndentationError: unexpected indent

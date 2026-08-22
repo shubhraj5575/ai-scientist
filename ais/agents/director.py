@@ -202,6 +202,32 @@ class Director:
 
         promoted = None
         promotable = [a for a in analyses if a["decision"] == "promote"]
+        # D11 replication path: two independent batches each showing
+        # significant delta >= min_effect_pp/2 vs the CURRENT champion
+        for a in analyses:
+            if a in promotable or not a["holm_reject"]:
+                continue
+            if a["mean_delta_pp"] < C.DEFAULT_PROTOCOL.min_effect_pp / 2:
+                continue
+            rt_ok = (not np.isfinite(a["median_runtime_ratio"])
+                     or a["median_runtime_ratio"]
+                     <= C.DEFAULT_PROTOCOL.max_runtime_ratio)
+            if not rt_ok:
+                continue
+            prior = self.db.one(
+                """SELECT COUNT(DISTINCT batch_id) AS nb FROM analyses
+                   WHERE candidate_uid=? AND baseline_uid=? AND holm_reject=1
+                   AND mean_delta_pp>=? AND batch_id!=?""",
+                (a["candidate_uid"], a["baseline_uid"],
+                 C.DEFAULT_PROTOCOL.min_effect_pp / 2, batch_id))
+            if prior and prior["nb"] >= 1:
+                a["decision"] = "promote_replicated"
+                self.db.execute(
+                    "UPDATE analyses SET decision='promote_replicated' "
+                    "WHERE id=(SELECT MAX(id) FROM analyses WHERE "
+                    "candidate_uid=? AND batch_id=?)",
+                    (a["candidate_uid"], batch_id))
+                promotable.append(a)
         if promotable:
             best = max(promotable, key=lambda a: a["mean_delta_pp"])
             promoted = best

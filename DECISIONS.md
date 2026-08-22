@@ -73,3 +73,12 @@ power; medium n=50 nearly saturated (0.03%), n=200 carries the signal
 (mean 0.83%, range 0–3%). DECISION: primary analyses restricted to the
 medium suite; exact suite retained as a correctness/sanity guard only.
 This is a data-driven protocol refinement recorded BEFORE adaptive batches.
+
+## D11 — Replication-based promotion path (2026-08-23 ~20:15Z)
+First OFAT batch showed real effects exist but the strongest positive one
+(+0.15pp, p=2e-4) sits below the 0.30pp practical bar. Rather than lowering
+the bar (noise risk), we add a second promotion pathway: a candidate that
+significantly beats the CURRENT champion by >=0.15pp in TWO independent
+batches (Holm-rejected in both) is promoted as `promote_replicated`.
+Single-batch >=0.30pp promotions unchanged. This mirrors the replication
+logic used in experimental sciences and is decided before seeing batch 2.
