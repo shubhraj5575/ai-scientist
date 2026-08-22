@@ -56,3 +56,12 @@ exact reproducibility from (kind,n,seed).
   (standard practice; makes neighbourhood incomplete).
 * Wall-clock budgets make runs machine-dependent; all analyses are paired
   within the same machine/session, and runtime ratios are reported.
+
+## D9 — Budget rebalancing (before campaign launch, after pipeline smoke test)
+Initial budgets (5s/10s per run) would cost ~65 min per full candidate —
+infeasible for the planned number of batches. Revised: exact 1.5s (all 10
+seeds), medium/structured 3.0s (6 seeds), scale 15s. Full candidate now
+~13-15 min; pilot screen ~2 min. Risk: conclusions might differ at longer
+budgets — mitigated by (a) a dedicated budget-sensitivity check on the final
+champion, (b) reporting kick counts so speed-normalised comparisons are
+possible post hoc.

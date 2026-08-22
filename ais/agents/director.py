@@ -34,6 +34,29 @@ from .statistician import Statistician
 
 PROJECT_ROOT = C.PROJECT_ROOT
 
+SEEDS_MAP_DEFAULT = {
+    "exact": list(C.SEEDS_EXACT),
+    "medium": list(C.SEEDS_MEDIUM),
+    "structured": list(C.SEEDS_MEDIUM),
+    "scale": [0, 1, 2],
+}
+
+
+def _suite_prefix(instance_name: str) -> str:
+    kind = instance_name.split("_")[0]
+    n = int(instance_name.split("_n")[1].split("_")[0])
+    if kind == "uniform":
+        return "exact" if n <= 14 else "medium"
+    return "structured" if n < 500 else "scale"
+
+
+def budgets_for(*suites: str) -> dict[str, float]:
+    b = {"exact": C.DEFAULT_BUDGETS.exact_suite,
+         "medium": C.DEFAULT_BUDGETS.medium,
+         "structured": C.DEFAULT_BUDGETS.structured,
+         "scale": C.DEFAULT_BUDGETS.scale}
+    return {s: b[s] for s in suites}
+
 
 class Director:
     def __init__(self):
@@ -114,7 +137,8 @@ class Director:
         return True
 
     def run_batch(self, batch_id: str, candidates: list, suites: list[str],
-                  seeds: list[int], budgets: dict[str, float],
+                  seeds_map: dict[str, list[int]],
+                  budgets: dict[str, float],
                   pilot_first: bool = False) -> list[dict]:
         accepted: list[dict] = []
         for cand in candidates:
@@ -123,43 +147,54 @@ class Director:
             self._register(cand)
             ok = True
             if pilot_first:
-                n_pilot = self.bench.benchmark_candidate(
+                pilot_budgets = {s: max(1.0, budgets[s] * 0.4) for s in suites}
+                self.bench.benchmark_candidate(
                     batch_id + "-pilot", cand.uid, cand.config,
-                    suites=suites[:1], seeds=seeds[:3],
-                    budget_map={s: max(1.0, budgets[s] * 0.4)
-                                for s in suites})
+                    suites=suites[:1],
+                    seeds_map={suites[0]: seeds_map[suites[0]][:3]},
+                    budget_map=pilot_budgets)
                 pilot_rows = self.db.query(
                     """SELECT excess_pct FROM runs WHERE candidate_uid=? AND
                        batch_id=?""", (cand.uid, batch_id + "-pilot"))
                 pilot_ex = [r["excess_pct"] for r in pilot_rows
-                            if np.isfinite(r["excess_pct"])]
+                            if r["excess_pct"] is not None
+                            and np.isfinite(r["excess_pct"])]
                 # screening rule: keep if within 3pp of champion mean
                 champ_ex, _, _ = self.db.excess_lookup(self.champion_uid)
-                champ_keys = [k for k in champ_ex if k[0].startswith(suites[0])]
-                champ_mean = (np.mean([champ_ex[k] for k in champ_keys])
+                champ_keys = [k for k in champ_ex
+                              if k[0].rsplit("_n", 1)[-1].split("_")[0]
+                              .isdigit() and _suite_prefix(k[0]) == suites[0]]
+                champ_mean = (float(np.mean([champ_ex[k] for k in champ_keys]))
                               if champ_keys else None)
                 keep = (not pilot_ex or champ_mean is None
-                        or np.mean(pilot_ex) <= champ_mean + 3.0)
+                        or float(np.mean(pilot_ex)) <= champ_mean + 3.0)
                 if not keep:
                     self.db.set_candidate_status(cand.uid, "rejected")
                     self.db.add_critique(
                         batch_id, cand.uid, "info",
-                        f"pilot_screened_out mean={np.mean(pilot_ex):.2f} "
-                        f"vs champ {champ_mean:.2f}")
+                        f"pilot_screened_out mean="
+                        f"{float(np.mean(pilot_ex)):.2f} vs champ "
+                        f"{champ_mean:.2f}")
                     ok = False
             if ok:
                 n = self.bench.benchmark_candidate(
                     batch_id, cand.uid, cand.config, suites=suites,
-                    seeds=seeds, budget_map=budgets)
+                    seeds_map=seeds_map, budget_map=budgets)
                 self.db.set_candidate_status(cand.uid, "benchmarked")
                 accepted.append({"uid": cand.uid, "config": cand.config,
                                  "n_runs": n})
         return accepted
 
     def analyse_and_promote(self, batch_id: str, accepted: list[dict],
-                            suites: tuple[str, ...]) -> list[dict]:
-        analyses = self.stat.analyse_batch(batch_id, accepted,
-                                           self.champion_uid, suites=suites)
+                            suites: tuple[str, ...],
+                            baseline_uid: str | None = None) -> list[dict]:
+        analyses = self.stat.analyse_batch(
+            batch_id, accepted, baseline_uid or self.champion_uid,
+            suites=suites)
+        if not analyses:
+            self.log(f"batch {batch_id}: nothing analysable "
+                     f"(no baseline or no shared pairs)")
+            return []
         self.stat.record(batch_id, analyses)
         findings = self.critic.review_batch(
             batch_id, [a["uid"] for a in accepted], len(C.SEEDS), analyses)
@@ -241,9 +276,11 @@ class Director:
                               hypothesis_uid=None, parent_uid="",
                               code_version="v1", git_commit=self.git)
         suites = ["medium", "structured"]
-        budget_map = {"medium": budget_s, "structured": budget_s}
+        budget_map = {"medium": budget_s, "structured": budget_s,
+                      "exact": budget_s, "scale": budget_s}
+        seeds_map = {s: list(seeds) for s in suites}
         n = self.bench.benchmark_candidate(
-            batch, uid, cand.config, suites=suites, seeds=list(seeds),
+            batch, uid, cand.config, suites=suites, seeds_map=seeds_map,
             budget_map=budget_map)
         self.db.decision("phase", {"name": "bks_bootstrap", "runs": n,
                                    "budget_per_run": budget_s})
@@ -274,9 +311,8 @@ class Director:
                 self._register(cand)
                 n = self.bench.benchmark_candidate(
                     batch, cand.uid, cand.config,
-                    suites=["exact", "medium"], seeds=list(C.SEEDS),
-                    budget_map={"exact": DEFAULT_SUITE_BUDGETS["exact"],
-                                "medium": DEFAULT_SUITE_BUDGETS["medium"]})
+                    suites=["exact", "medium"], seeds_map=SEEDS_MAP_DEFAULT,
+                    budget_map=budgets_for("exact", "medium"))
                 self.db.set_candidate_status(cand.uid, "benchmarked")
                 accepted.append({"uid": cand.uid, "config": cand.config,
                                  "n_runs": n})
@@ -305,9 +341,8 @@ class Director:
         tried = {r["uid"] for r in self.db.query("SELECT uid FROM candidates")}
         props = self.designer.propose(self.champion_cfg, tried, k_new=k_new)
         accepted = self.run_batch(
-            batch, props, ["exact", "medium"], list(C.SEEDS),
-            {"exact": DEFAULT_SUITE_BUDGETS["exact"],
-             "medium": DEFAULT_SUITE_BUDGETS["medium"]})
+            batch, props, ["exact", "medium"], SEEDS_MAP_DEFAULT,
+            budgets_for("exact", "medium"))
         return self.analyse_and_promote(batch, accepted,
                                         ("exact", "medium"))
 
@@ -316,8 +351,9 @@ class Director:
         tried = {r["uid"] for r in self.db.query("SELECT uid FROM candidates")}
         props = self.designer.propose(self.champion_cfg, tried, k_new=k_new)
         accepted = self.run_batch(
-            batch, props, ["medium"], list(C.SEEDS),
-            {"medium": DEFAULT_SUITE_BUDGETS["medium"]}, pilot_first=True)
+            batch, props, ["medium"],
+            {**SEEDS_MAP_DEFAULT, "medium": list(C.SEEDS_MEDIUM)},
+            budgets_for("medium"), pilot_first=True)
         return self.analyse_and_promote(batch, accepted, ("medium",))
 
     def phase_scale(self, alts: list[dict] | None = None):
@@ -340,8 +376,8 @@ class Director:
                 continue
             cfg = json.loads(row["config_json"])
             n = self.bench.benchmark_candidate(
-                batch, uid, cfg, ["scale"], seeds=[0, 1, 2],
-                budget_map={"scale": DEFAULT_SUITE_BUDGETS["scale"]})
+                batch, uid, cfg, ["scale"], seeds_map={"scale": [0, 1, 2]},
+                budget_map={"scale": C.DEFAULT_BUDGETS.scale})
             out[uid] = n
         # descriptive comparison (no promotion from scale suite)
         ex_champ, rt_c, _ = self.db.excess_lookup(self.champion_uid)
@@ -385,6 +421,6 @@ class Director:
                 rationale="Rankings can flip across distributions; direct test.",
                 expected_effect="unknown", prediction="descriptive"))
         accepted = self.run_batch(
-            batch, cands, ["structured"], list(C.SEEDS),
-            {"structured": DEFAULT_SUITE_BUDGETS["structured"]})
+            batch, cands, ["structured"], SEEDS_MAP_DEFAULT,
+            budgets_for("structured"))
         return self.analyse_and_promote(batch, accepted, ("structured",))

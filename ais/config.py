@@ -38,12 +38,18 @@ class StatsProtocol:
 
 @dataclass
 class BenchmarkBudgets:
-    """Wall-clock budgets per run type (seconds)."""
-    exact_suite: float = 5.0        # n <= 14 instances, optimal known
-    medium: float = 10.0            # n in {50,100,200}
-    structured: float = 10.0        # clustered/grid n=100
-    scale: float = 20.0             # n >= 500 scaling study
-    pilot_fraction: float = 0.25    # fraction of full budget during pilots
+    """Wall-clock budgets per run type (seconds).
+
+    Sized so one FULL candidate evaluation (exact+medium suites, all seeds)
+    costs ~13-15 min: exact 20inst x10seeds x1.5s + medium 30inst x6seeds x3s.
+    Ranking stability under reduced budgets is itself tested empirically
+    (see EXPERIMENTS.md 'budget sensitivity' check).
+    """
+    exact_suite: float = 1.5
+    medium: float = 3.0
+    structured: float = 3.0
+    scale: float = 15.0
+    bks_bootstrap: float = 10.0
 
 
 DEFAULT_PROTOCOL = StatsProtocol()
@@ -55,5 +61,7 @@ MEDIUM_NS = [50, 100, 200]
 SCALE_NS = [500, 1000]
 STRUCTURED_N = 100
 SEEDS = tuple(range(10))          # global seed set S = {0..9}
+SEEDS_EXACT = tuple(range(10))    # cheap runs -> all seeds
+SEEDS_MEDIUM = tuple(range(6))    # expensive runs -> 6 paired seeds
 
 GIT_REMOTE = "https://github.com/shubhraj5575/ai-scientist"

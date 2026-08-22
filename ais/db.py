@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS runs(
   seed INTEGER NOT NULL,
   budget_s REAL NOT NULL,
   length REAL NOT NULL,
-  excess_pct REAL NOT NULL,
+  excess_pct REAL,                  -- NULL when no reference existed yet
   runtime_s REAL NOT NULL,
   kicks INTEGER NOT NULL,
   ls_moves INTEGER NOT NULL,
@@ -246,7 +246,9 @@ class ExperimentDB:
                 runtime_s,kicks,ls_moves,restarts,peak_rss_mb,git_commit,env_json,created_at)
                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
             (batch_id, candidate_uid, instance_id, seed, budget_s, length,
-             excess_pct, runtime_s, kicks, ls_moves, restarts, peak_rss_mb,
+             None if excess_pct is None or excess_pct != excess_pct
+             else float(excess_pct),
+             runtime_s, kicks, ls_moves, restarts, peak_rss_mb,
              git_commit, json.dumps(env, default=str), now_iso()),
         )
 

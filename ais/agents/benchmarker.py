@@ -28,6 +28,7 @@ class BenchmarkEngineer:
     def __init__(self, db):
         self.db = db
         self.git = git_commit(PROJECT_ROOT)
+        self.instance_names: dict[str, int] = {}
 
     # -- instance registry ---------------------------------------------------
     def ensure_instances(self) -> dict[str, int]:
@@ -47,6 +48,7 @@ class BenchmarkEngineer:
             inst = get_instance(kind, n, seed)
             iid = self.db.upsert_instance(inst)
             names[inst.name] = iid
+        self.instance_names = names
         return names
 
     def set_exact_references(self, instance_names: list[str]):
@@ -93,19 +95,25 @@ class BenchmarkEngineer:
     # -- execution -------------------------------------------------------------
     def benchmark_candidate(self, batch_id: str, candidate_uid: str,
                             cfg: dict, suites: list[str],
-                            seeds: list[int], budget_map: dict[str, float],
+                            seeds_map: dict[str, list[int]],
+                            budget_map: dict[str, float],
                             verbose: bool = False) -> int:
-        """Run candidate over requested suites/seeds. Returns #runs."""
+        """Run candidate over suites with per-suite seed lists. Returns #runs."""
         ilscfg = _to_ilscfg(cfg)
         env = env_snapshot({"git_commit": self.git})
+        if not self.instance_names:
+            # lazy reload from DB (new session after a previous registration)
+            rows = self.db.query("SELECT id, name FROM instances")
+            self.instance_names = {r["name"]: int(r["id"]) for r in rows}
         count = 0
         for suite_name in suites:
             budget = budget_map[suite_name]
+            seeds = seeds_map[suite_name]
             for inst_name, iid in sorted(self.instance_names.items()):
                 if not _in_suite(suite_name, inst_name):
                     continue
                 inst = get_instance(*_parse_name(inst_name))
-                ref, ref_kind = None, None
+                ref_val, ref_kind = None, None
                 try:
                     ref_val, ref_kind = self.db.get_reference(iid)
                 except LookupError:
@@ -131,6 +139,10 @@ class BenchmarkEngineer:
                     if verbose:
                         print(f"    {inst_name} s{seed}: len={res.length:.1f} "
                               f"excess={excess:.2f}% rt={res.runtime_s:.2f}s")
+        if count == 0 and suites:
+            raise RuntimeError(
+                f"benchmark_candidate produced 0 runs (suites={suites}) — "
+                f"instance registry empty or suite filter matched nothing")
         return count
 
 
@@ -145,8 +157,7 @@ def _parse_name(name: str) -> tuple[str, int, int]:
 
 
 def _in_suite(suite: str, inst_name: str) -> bool:
-    kind, ns, _ = _parse_name(inst_name)
-    n = int(ns[1:])
+    kind, n, _ = _parse_name(inst_name)
     if suite == "exact":
         return kind == "uniform" and n <= 14
     if suite == "medium":

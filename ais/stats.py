@@ -158,7 +158,10 @@ def _midranks(x: np.ndarray) -> np.ndarray:
 def cohens_dz(d: np.ndarray) -> float:
     d = np.asarray(d, dtype=float)
     sd = d.std(ddof=1)
-    return float(d.mean() / sd) if sd > 0 else float("inf") * float(np.sign(d.mean()))
+    if sd < 1e-12:
+        return 0.0 if abs(d.mean()) < 1e-12 else (
+            99.0 if d.mean() > 0 else -99.0)   # finite sentinel for DB storage
+    return float(d.mean() / sd)
 
 
 # ---------------------------------------------------------------------------
