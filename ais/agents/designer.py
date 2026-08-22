@@ -163,7 +163,37 @@ class Designer:
                 prediction="Significant paired difference either direction; "
                            "sign recorded as evidence about prior transfer."))
 
-        # --- family 3: bandit-guided combinations -------------------------
+        # --- family 3: combo of empirically-winning arms -------------------
+        winners = {}
+        for comp in ("construction", "ls_operators", "nl_k", "perturbation",
+                     "acceptance", "perturb_base"):
+            entries = []
+            for v in COMPONENT_SPACE[comp]:
+                rs = self.bandit.rewards.get((comp, _key(v)), [])
+                if len(rs) >= 2:
+                    entries.append((sum(rs) / len(rs), v))
+            if entries:
+                entries.sort(key=lambda e: -e[0])
+                if entries[0][0] > 0:      # only arms with net-positive reward
+                    winners[comp] = entries[0][1]
+        if winners and len(winners) >= 2:
+            cfg = dict(champion_cfg)
+            cfg.update(winners)
+            _fill_required_params(cfg)
+            uid = config_uid(cfg)
+            if uid not in tried_digests and \
+                    not any(p.uid == uid for p in proposals):
+                proposals.append(self._wrap(
+                    cfg, family="combo",
+                    statement="Combining components whose arms show "
+                              f"net-positive rewards ({winners}) beats champion.",
+                    rationale="Greedy assembly of individually-positive arms; "
+                              "tests additivity of component effects.",
+                    expected_effect=">= sum of individual effects if additive.",
+                    prediction="Significant improvement vs champion; failure "
+                               "would indicate negative interaction."))
+
+        # --- family 4: bandit-guided combinations -------------------------
         while len(proposals) < k_new:
             cfg = dict(champion_cfg)
             comps = ["ls_operators", "nl_k", "perturbation", "acceptance",

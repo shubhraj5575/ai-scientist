@@ -82,3 +82,9 @@ significantly beats the CURRENT champion by >=0.15pp in TWO independent
 batches (Holm-rejected in both) is promoted as `promote_replicated`.
 Single-batch >=0.30pp promotions unchanged. This mirrors the replication
 logic used in experimental sciences and is decided before seeing batch 2.
+
+## D12 — Combo proposal family (2026-08-22 ~22:05Z)
+Designer now includes greedy assembly of components whose arms accumulated
+net-positive mean rewards over >=2 batches. Purpose: deliberately re-test
+moderate winners together (supports D11 replication path) instead of waiting
+for random mutation collisions.

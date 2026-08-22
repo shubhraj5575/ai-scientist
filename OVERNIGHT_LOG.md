@@ -23,3 +23,16 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-22T20:08:51Z**   C-9a891bf98e (['medium']): Δ=-5.37pp CI[-6.07,-4.68] pW=7.72e-28 dz=-1.12 rt×1.00 → significant_but_not_practical
 - **2026-08-22T20:08:51Z**   C-b078915e46 (['medium']): Δ=-1.03pp CI[-1.21,-0.85] pW=1.54e-19 dz=-0.83 rt×1.00 → significant_but_not_practical
 - **2026-08-22T20:08:51Z**   C-dc7bd80eaf (['medium']): Δ=+0.04pp CI[+0.00,+0.08] pW=0.00021 dz=0.17 rt×1.00 → significant_but_not_practical
+- **2026-08-22T21:11:42Z** campaign run started: phases=['ofat', 'explore'] budget=6.0h
+- **2026-08-22T21:56:53Z** batch phase_ofat_2026-08-22T21:11:42Z: 5 analysed, 0 critiques, promotions=[]
+- **2026-08-22T21:56:53Z**   C-07d533c9b2 (['medium']): Δ=+0.07pp CI[+0.04,+0.09] pW=3.71e-08 dz=0.40 rt×1.00 → significant_but_not_practical
+- **2026-08-22T21:56:53Z**   C-68461f3210 (['medium']): Δ=-0.03pp CI[-0.10,+0.03] pW=0.551 dz=-0.07 rt×1.00 → no_change
+- **2026-08-22T21:56:53Z**   C-473cdcdb35 (['medium']): Δ=-1.79pp CI[-2.02,-1.55] pW=1.13e-23 dz=-1.11 rt×1.00 → significantly_worse
+- **2026-08-22T21:56:53Z**   C-f8342ab89d (['medium']): Δ=-1.81pp CI[-2.04,-1.57] pW=1.08e-23 dz=-1.11 rt×1.00 → significantly_worse
+- **2026-08-22T21:56:53Z**   C-536023d575 (['medium']): Δ=-1.82pp CI[-2.05,-1.58] pW=1.04e-23 dz=-1.12 rt×1.00 → significantly_worse
+- **2026-08-22T22:05Z** MANUAL ANALYSIS NOTE (Director): OFAT batch 2 decoded —
+  all three ~-1.8pp losers share `perturbation=None`, quantifying the ILS-kick
+  contribution at ~1.8pp on medium suite @3s. `perturb_base=best` gives small
+  significant gain (+0.07pp, dz=0.40). Bandit now avoids perturbation=None.
+  Designer extended with 'combo' family (D12): greedy assembly of arms with
+  net-positive rewards to force replication attempts of moderate winners.
