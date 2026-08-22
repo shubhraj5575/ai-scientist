@@ -96,7 +96,8 @@ def main():
             label = f'{c["uid"]} [{c["family"]}\\n{c["status"]}]'
             parent = c["parent_uid"] or "ROOT"
             lines.append(f'  {parent} --> "{label}"')
-        lines.append("```", "")
+        lines.append("```")
+        lines.append("")
         lines += ["### Hypothesis ledger", "",
                   "| uid | statement | expected | prediction |",
                   "|---|---|---|---|"]
