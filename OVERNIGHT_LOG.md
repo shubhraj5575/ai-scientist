@@ -13,3 +13,4 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-22T18:16:24Z**   C-31e4c0b1a6 (['exact', 'medium']): Δ=+0.00pp CI[+0.00,+0.00] pW=1 dz=0.00 rt×1.00 → no_change
 - **2026-08-22T18:19:25Z** campaign run started: phases=['setup', 'bks', 'baselines'] budget=8.0h
 - **2026-08-22T18:19:26Z** setup complete: 70 instances registered
+- **2026-08-22T18:44:29Z** BKS bootstrap done (100 runs @ 15.0s)
