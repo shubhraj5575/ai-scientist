@@ -1,0 +1,28 @@
+- **2026-08-22T18:19:25Z** campaign run started: phases=['setup', 'bks', 'baselines'] budget=8.0h
+  exact ref uniform_n8_s0: 3204.47
+  exact ref uniform_n8_s1: 2540.82
+  exact ref uniform_n8_s2: 2294.80
+  exact ref uniform_n8_s3: 2579.21
+  exact ref uniform_n8_s4: 1987.61
+  exact ref uniform_n10_s0: 3279.21
+  exact ref uniform_n10_s1: 2833.27
+  exact ref uniform_n10_s2: 2635.18
+  exact ref uniform_n10_s3: 2745.46
+  exact ref uniform_n10_s4: 2786.63
+  exact ref uniform_n12_s0: 3413.34
+  exact ref uniform_n12_s1: 2849.33
+  exact ref uniform_n12_s2: 2711.96
+  exact ref uniform_n12_s3: 3500.06
+  exact ref uniform_n12_s4: 2921.14
+  exact ref uniform_n14_s0: 3750.35
+  exact ref uniform_n14_s1: 3290.01
+  exact ref uniform_n14_s2: 3143.27
+  exact ref uniform_n14_s3: 3646.50
+  exact ref uniform_n14_s4: 3007.38
+- **2026-08-22T18:19:26Z** setup complete: 70 instances registered
+[phase setup] took 3s
+- **2026-08-22T18:44:29Z** BKS bootstrap done (100 runs @ 15.0s)
+[phase bks] took 1503s
+- **2026-08-22T19:12:39Z** baselines: plainLS=0.22% ILS=0.15% Δ=+0.06pp p=1.5e-08
+[phase baselines] took 1694s
+done

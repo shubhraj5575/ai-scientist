@@ -345,11 +345,12 @@ class Director:
         batch = f"phase_ofat_{now_iso()}"
         tried = {r["uid"] for r in self.db.query("SELECT uid FROM candidates")}
         props = self.designer.propose(self.champion_cfg, tried, k_new=k_new)
+        # D10: primary endpoint = medium suite (exact suite saturated);
+        # exact suite retained as correctness/sanity evidence only.
         accepted = self.run_batch(
-            batch, props, ["exact", "medium"], SEEDS_MAP_DEFAULT,
-            budgets_for("exact", "medium"))
-        return self.analyse_and_promote(batch, accepted,
-                                        ("exact", "medium"))
+            batch, props, ["medium"], SEEDS_MAP_DEFAULT,
+            budgets_for("medium"))
+        return self.analyse_and_promote(batch, accepted, ("medium",))
 
     def phase_explore_round(self, k_new: int = 6):
         batch = f"explore_{now_iso()}"

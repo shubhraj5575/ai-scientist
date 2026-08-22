@@ -65,3 +65,11 @@ seeds), medium/structured 3.0s (6 seeds), scale 15s. Full candidate now
 budgets — mitigated by (a) a dedicated budget-sensitivity check on the final
 champion, (b) reporting kick counts so speed-normalised comparisons are
 possible post hoc.
+
+## D10 — Primary endpoint refined after baseline evidence (2026-08-23 ~19:15Z)
+EXPERIMENTAL OBSERVATION: all 400 exact-suite runs (n≤14, both baselines,
+10 seeds) reached the proven optimum → zero variance, no discriminative
+power; medium n=50 nearly saturated (0.03%), n=200 carries the signal
+(mean 0.83%, range 0–3%). DECISION: primary analyses restricted to the
+medium suite; exact suite retained as a correctness/sanity guard only.
+This is a data-driven protocol refinement recorded BEFORE adaptive batches.
