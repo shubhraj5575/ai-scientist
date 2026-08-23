@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/shubhraj/Downloads/ai scientist/scripts/run_overnight.py", line 48, in main
+    d.phase_scale()
+  File "/Users/shubhraj/Downloads/ai scientist/ais/agents/director.py", line 447, in phase_scale
+    n = self.bench.benchmark_candidate(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubhraj/Downloads/ai scientist/ais/agents/benchmarker.py", line 147, in benchmark_candidate
+    raise RuntimeError(
+RuntimeError: benchmark_candidate produced 0 runs (suites=['scale']) — instance registry empty or suite filter matched nothing
