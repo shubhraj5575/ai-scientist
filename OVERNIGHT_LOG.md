@@ -113,3 +113,5 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-23T21:23:32Z**   C-e06b471e93 (['medium']): Δ=-0.56pp CI[-0.68,-0.45] pW=4.02e-17 dz=-0.69 rt×1.00 → significantly_worse
 - **2026-08-23T21:23:32Z**   C-ffa5e3a2ee (['medium']): Δ=-0.54pp CI[-0.66,-0.43] pW=3.13e-17 dz=-0.71 rt×1.00 → significantly_worse
 - **2026-08-23T21:23:32Z**   C-7e9c469b93 (['medium']): Δ=-0.52pp CI[-0.66,-0.40] pW=1.8e-14 dz=-0.60 rt×1.00 → significantly_worse
+- **2026-08-23T21:50:26Z** campaign run started: phases=['scale', 'robust'] budget=2.0h
+- **2026-08-23T21:50:26Z** PHASE scale FAILED: benchmark_candidate produced 0 runs (suites=['scale']) — instance registry empty or suite filter matched nothing

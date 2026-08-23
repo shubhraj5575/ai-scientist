@@ -1,0 +1,24 @@
+- **2026-08-23T17:41:23Z** campaign run started: phases=['explore'] budget=3.5h
+- **2026-08-23T18:46:55Z** batch explore_2026-08-23T17:41:23Z: 6 analysed, 0 critiques, promotions=['C-3f9cba2784']
+- **2026-08-23T18:46:55Z**   C-3f9cba2784 (['medium']): Δ=+0.20pp CI[+0.13,+0.26] pW=4.69e-10 dz=0.44 rt×1.00 → promote_replicated
+- **2026-08-23T18:46:55Z**   C-daf5979f68 (['medium']): Δ=+0.16pp CI[+0.09,+0.22] pW=1.73e-06 dz=0.35 rt×1.00 → promote_replicated
+- **2026-08-23T18:46:55Z**   C-72f43e89b2 (['medium']): Δ=-0.11pp CI[-0.19,-0.03] pW=0.0161 dz=-0.21 rt×1.00 → null_or_negative
+- **2026-08-23T18:46:55Z**   C-0ef37ec3bc (['medium']): Δ=-0.09pp CI[-0.16,-0.03] pW=0.0182 dz=-0.20 rt×1.00 → null_or_negative
+- **2026-08-23T18:46:55Z**   C-23fad5d789 (['medium']): Δ=-0.19pp CI[-0.28,-0.11] pW=0.000188 dz=-0.32 rt×1.00 → null_or_negative
+- **2026-08-23T18:46:55Z**   C-488b7368fe (['medium']): Δ=+0.12pp CI[+0.05,+0.19] pW=0.000507 dz=0.25 rt×1.00 → significant_but_not_practical
+- **2026-08-23T20:18:24Z** batch explore_2026-08-23T18:46:57Z: 6 analysed, 0 critiques, promotions=[]
+- **2026-08-23T20:18:24Z**   C-9b7217ba36 (['medium']): Δ=-0.25pp CI[-0.32,-0.17] pW=4.21e-10 dz=-0.48 rt×1.00 → null_or_negative
+- **2026-08-23T20:18:24Z**   C-734451b438 (['medium']): Δ=-0.00pp CI[-0.05,+0.05] pW=0.684 dz=-0.01 rt×1.00 → no_change
+- **2026-08-23T20:18:24Z**   C-54635c2b62 (['medium']): Δ=-0.49pp CI[-0.60,-0.39] pW=3.14e-16 dz=-0.68 rt×1.00 → significantly_worse
+- **2026-08-23T20:18:24Z**   C-1cad4f213f (['medium']): Δ=-0.44pp CI[-0.53,-0.35] pW=3.14e-16 dz=-0.71 rt×1.00 → significantly_worse
+- **2026-08-23T20:18:24Z**   C-706d7d1525 (['medium']): Δ=-0.29pp CI[-0.36,-0.22] pW=4.57e-12 dz=-0.57 rt×1.00 → null_or_negative
+- **2026-08-23T20:18:24Z**   C-da446f5679 (['medium']): Δ=-0.48pp CI[-0.59,-0.38] pW=3.32e-15 dz=-0.66 rt×1.00 → significantly_worse
+- **2026-08-23T21:23:32Z** batch explore_2026-08-23T20:18:26Z: 6 analysed, 0 critiques, promotions=[]
+- **2026-08-23T21:23:32Z**   C-3c91a94a92 (['medium']): Δ=-0.19pp CI[-0.26,-0.12] pW=1.37e-08 dz=-0.40 rt×1.00 → null_or_negative
+- **2026-08-23T21:23:32Z**   C-5b6560688a (['medium']): Δ=-0.24pp CI[-0.31,-0.16] pW=1.22e-09 dz=-0.45 rt×1.00 → null_or_negative
+- **2026-08-23T21:23:32Z**   C-a45259383e (['medium']): Δ=-0.57pp CI[-0.68,-0.46] pW=3.91e-19 dz=-0.73 rt×1.00 → significantly_worse
+- **2026-08-23T21:23:32Z**   C-e06b471e93 (['medium']): Δ=-0.56pp CI[-0.68,-0.45] pW=4.02e-17 dz=-0.69 rt×1.00 → significantly_worse
+- **2026-08-23T21:23:32Z**   C-ffa5e3a2ee (['medium']): Δ=-0.54pp CI[-0.66,-0.43] pW=3.13e-17 dz=-0.71 rt×1.00 → significantly_worse
+- **2026-08-23T21:23:32Z**   C-7e9c469b93 (['medium']): Δ=-0.52pp CI[-0.66,-0.40] pW=1.8e-14 dz=-0.60 rt×1.00 → significantly_worse
+[phase explore] took 13333s
+done
