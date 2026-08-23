@@ -75,3 +75,10 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-23T15:29:40Z**   C-8c2495eab8 (['medium']): Δ=+0.07pp CI[+0.00,+0.14] pW=0.00812 dz=0.15 rt×1.00 → significant_but_not_practical
 - **2026-08-23T15:29:40Z**   C-006b20e16c (['medium']): Δ=-0.11pp CI[-0.20,-0.02] pW=0.055 dz=-0.17 rt×1.00 → no_change
 - **2026-08-23T15:29:40Z**   C-d372a8f2b7 (['medium']): Δ=-0.05pp CI[-0.14,+0.03] pW=0.508 dz=-0.09 rt×1.00 → no_change
+- **2026-08-23T16:34:51Z** batch explore_2026-08-23T15:29:42Z: 6 analysed, 0 critiques, promotions=[]
+- **2026-08-23T16:34:51Z**   C-7c808014ec (['medium']): Δ=-0.41pp CI[-0.57,-0.28] pW=2.17e-09 dz=-0.40 rt×1.00 → significantly_worse
+- **2026-08-23T16:34:51Z**   C-f600b92491 (['medium']): Δ=+0.10pp CI[+0.03,+0.17] pW=0.00809 dz=0.21 rt×1.00 → significant_but_not_practical
+- **2026-08-23T16:34:51Z**   C-3e79f699cd (['medium']): Δ=-0.33pp CI[-0.44,-0.22] pW=2.02e-07 dz=-0.45 rt×1.00 → significantly_worse
+- **2026-08-23T16:34:51Z**   C-5caf202052 (['medium']): Δ=-0.19pp CI[-0.27,-0.11] pW=7.56e-05 dz=-0.33 rt×1.00 → null_or_negative
+- **2026-08-23T16:34:51Z**   C-7fa81bb576 (['medium']): Δ=-0.32pp CI[-0.42,-0.22] pW=1.39e-08 dz=-0.48 rt×1.00 → significantly_worse
+- **2026-08-23T16:34:51Z**   C-c24cb2a6e7 (['medium']): Δ=-0.38pp CI[-0.48,-0.28] pW=2.12e-11 dz=-0.55 rt×1.00 → significantly_worse
