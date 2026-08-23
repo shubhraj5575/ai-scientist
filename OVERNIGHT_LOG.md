@@ -53,3 +53,17 @@ Autonomous research campaign log. Newest entries at bottom.
   don't-look-bit leak in or-opt caused order-dependent premature convergence
   (up to ~30%). 13 pre-fix candidates quarantined; Coder gate extended with
   automatic LS-soundness probe; regression tests added (25 passing).
+- **2026-08-23T14:23:43Z** batch postfix_revalidation_A1: 4 analysed, 0 critiques, promotions=[]
+- **2026-08-23T14:23:43Z**   C-6485ea2a2e (['medium']): Δ=+0.06pp CI[-0.01,+0.12] pW=0.0594 dz=0.12 rt×1.00 → no_change
+- **2026-08-23T14:23:43Z**   C-5f9f2c35b6 (['medium']): Δ=+0.13pp CI[+0.06,+0.19] pW=5.68e-05 dz=0.29 rt×1.00 → significant_but_not_practical
+- **2026-08-23T14:23:43Z**   C-3f9cba2784 (['medium']): Δ=+0.20pp CI[+0.13,+0.26] pW=6.09e-10 dz=0.44 rt×1.00 → significant_but_not_practical
+- **2026-08-23T14:23:43Z**   C-daf5979f68 (['medium']): Δ=+0.18pp CI[+0.12,+0.25] pW=7.87e-09 dz=0.41 rt×1.00 → significant_but_not_practical
+- **2026-08-23T14:24Z** POST-FIX REVALIDATION (batch postfix_revalidation_A1):
+  * R1 plain NN+2opt no-kick: +0.06pp ns vs champion → true kick contribution
+    is SMALL (~0.06pp at 3s budget), NOT the 1.8pp previously recorded
+    (that figure was an A1 confound — quarantine vindicated).
+  * R2 composite [two_opt,or_opt] no-kick: +0.13pp (p=6e-5) — richer local
+    search is the dominant component effect found so far.
+  * R3 winners re-benchmarked: C-3f9cba2784 +0.20pp (p=6e-10),
+    C-daf5979f68 +0.18pp (p=8e-9). One more independent >=0.15pp batch
+    triggers D11 replication promotion.
