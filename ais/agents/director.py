@@ -121,10 +121,13 @@ class Director:
             cand.hypothesis_uid, cand.statement, cand.rationale,
             cand.expected_effect, cand.prediction,
             literature_basis="see researcher notes")
-        self.db.add_candidate(
-            uid=cand.uid, family=cand.family, config=cand.config,
-            hypothesis_uid=cand.hypothesis_uid, parent_uid=self.champion_uid or "",
-            code_version="v1", git_commit=self.git)
+        exists = self.db.one("SELECT 1 FROM candidates WHERE uid=?",
+                             (cand.uid,))
+        if not exists:               # replication attempts keep original row
+            self.db.add_candidate(
+                uid=cand.uid, family=cand.family, config=cand.config,
+                hypothesis_uid=cand.hypothesis_uid, parent_uid=self.champion_uid or "",
+                code_version="v1", git_commit=self.git)
         return cand.uid
 
     def _sanity_gate(self, cand) -> bool:
@@ -379,10 +382,43 @@ class Director:
             budgets_for("medium"))
         return self.analyse_and_promote(batch, accepted, ("medium",))
 
+    def _replication_candidates(self, k: int = 2) -> list:
+        """D11 support: re-benchmark candidates that already beat the CURRENT
+        champion significantly (>=min_effect/2) in one prior batch, so the
+        two-batch replication rule can actually fire."""
+        out = []
+        if not self.champion_uid:
+            return out
+        rows = self.db.query(
+            """SELECT candidate_uid, MAX(mean_delta_pp) AS md,
+                      COUNT(DISTINCT batch_id) AS nb
+               FROM analyses
+               WHERE baseline_uid=? AND holm_reject=1 AND mean_delta_pp>=?
+               GROUP BY candidate_uid ORDER BY md DESC LIMIT ?""",
+            (self.champion_uid,
+             C.DEFAULT_PROTOCOL.min_effect_pp / 2, k))
+        for r in rows:
+            crow = self.db.one("SELECT config_json FROM candidates WHERE uid=?",
+                               (r["candidate_uid"],))
+            if not crow:
+                continue
+            cfg = json.loads(crow["config_json"])
+            out.append(self.designer._wrap(
+                cfg, family="replication",
+                statement=f"Replication attempt for {r['candidate_uid']} "
+                          f"(prior best Δ={r['md']:.2f}pp).",
+                rationale="D11 requires an independent second batch vs the "
+                          "same champion before promotion.",
+                expected_effect="repeat of prior effect size",
+                prediction="holm_reject and delta>=0.15pp again"))
+        return out
+
     def phase_explore_round(self, k_new: int = 6):
         batch = f"explore_{now_iso()}"
         tried = {r["uid"] for r in self.db.query("SELECT uid FROM candidates")}
-        props = self.designer.propose(self.champion_cfg, tried, k_new=k_new)
+        props = self._replication_candidates(k_new=2)
+        props += self.designer.propose(self.champion_cfg, tried,
+                                       k_new=k_new - len(props))
         accepted = self.run_batch(
             batch, props, ["medium"],
             {**SEEDS_MAP_DEFAULT, "medium": list(C.SEEDS_MEDIUM)},
