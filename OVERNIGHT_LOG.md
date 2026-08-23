@@ -67,3 +67,11 @@ Autonomous research campaign log. Newest entries at bottom.
   * R3 winners re-benchmarked: C-3f9cba2784 +0.20pp (p=6e-10),
     C-daf5979f68 +0.18pp (p=8e-9). One more independent >=0.15pp batch
     triggers D11 replication promotion.
+- **2026-08-23T14:24:29Z** campaign run started: phases=['explore'] budget=4.0h
+- **2026-08-23T15:29:40Z** batch explore_2026-08-23T14:24:29Z: 6 analysed, 0 critiques, promotions=[]
+- **2026-08-23T15:29:40Z**   C-1abefc1e0f (['medium']): Δ=+0.14pp CI[+0.08,+0.21] pW=4.51e-06 dz=0.32 rt×1.00 → significant_but_not_practical
+- **2026-08-23T15:29:40Z**   C-b56b49cdc8 (['medium']): Δ=+0.03pp CI[-0.04,+0.11] pW=0.407 dz=0.06 rt×1.00 → no_change
+- **2026-08-23T15:29:40Z**   C-833c6e3b5e (['medium']): Δ=-0.12pp CI[-0.21,-0.04] pW=0.0195 dz=-0.21 rt×1.00 → no_change
+- **2026-08-23T15:29:40Z**   C-8c2495eab8 (['medium']): Δ=+0.07pp CI[+0.00,+0.14] pW=0.00812 dz=0.15 rt×1.00 → significant_but_not_practical
+- **2026-08-23T15:29:40Z**   C-006b20e16c (['medium']): Δ=-0.11pp CI[-0.20,-0.02] pW=0.055 dz=-0.17 rt×1.00 → no_change
+- **2026-08-23T15:29:40Z**   C-d372a8f2b7 (['medium']): Δ=-0.05pp CI[-0.14,+0.03] pW=0.508 dz=-0.09 rt×1.00 → no_change
