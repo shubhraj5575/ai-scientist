@@ -84,3 +84,11 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-23T16:34:51Z**   C-c24cb2a6e7 (['medium']): Δ=-0.38pp CI[-0.48,-0.28] pW=2.12e-11 dz=-0.55 rt×1.00 → significantly_worse
 - **2026-08-23T16:50:34Z** campaign run started: phases=['explore'] budget=3.5h
 - **2026-08-23T16:50:34Z** PHASE explore FAILED: Director._replication_candidates() got an unexpected keyword argument 'k_new'
+- **2026-08-23T17:41:23Z** campaign run started: phases=['explore'] budget=3.5h
+- **2026-08-23T18:46:55Z** batch explore_2026-08-23T17:41:23Z: 6 analysed, 0 critiques, promotions=['C-3f9cba2784']
+- **2026-08-23T18:46:55Z**   C-3f9cba2784 (['medium']): Δ=+0.20pp CI[+0.13,+0.26] pW=4.69e-10 dz=0.44 rt×1.00 → promote_replicated
+- **2026-08-23T18:46:55Z**   C-daf5979f68 (['medium']): Δ=+0.16pp CI[+0.09,+0.22] pW=1.73e-06 dz=0.35 rt×1.00 → promote_replicated
+- **2026-08-23T18:46:55Z**   C-72f43e89b2 (['medium']): Δ=-0.11pp CI[-0.19,-0.03] pW=0.0161 dz=-0.21 rt×1.00 → null_or_negative
+- **2026-08-23T18:46:55Z**   C-0ef37ec3bc (['medium']): Δ=-0.09pp CI[-0.16,-0.03] pW=0.0182 dz=-0.20 rt×1.00 → null_or_negative
+- **2026-08-23T18:46:55Z**   C-23fad5d789 (['medium']): Δ=-0.19pp CI[-0.28,-0.11] pW=0.000188 dz=-0.32 rt×1.00 → null_or_negative
+- **2026-08-23T18:46:55Z**   C-488b7368fe (['medium']): Δ=+0.12pp CI[+0.05,+0.19] pW=0.000507 dz=0.25 rt×1.00 → significant_but_not_practical
