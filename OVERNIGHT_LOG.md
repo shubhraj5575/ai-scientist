@@ -99,3 +99,10 @@ Autonomous research campaign log. Newest entries at bottom.
   [two_opt→or_opt1] LS + double-bridge kick from current + SA(T0=0.5%·len,
   α=0.90) acceptance. Full loop demonstrated: hypothesis → evidence →
   replication → promotion.
+- **2026-08-23T20:18:24Z** batch explore_2026-08-23T18:46:57Z: 6 analysed, 0 critiques, promotions=[]
+- **2026-08-23T20:18:24Z**   C-9b7217ba36 (['medium']): Δ=-0.25pp CI[-0.32,-0.17] pW=4.21e-10 dz=-0.48 rt×1.00 → null_or_negative
+- **2026-08-23T20:18:24Z**   C-734451b438 (['medium']): Δ=-0.00pp CI[-0.05,+0.05] pW=0.684 dz=-0.01 rt×1.00 → no_change
+- **2026-08-23T20:18:24Z**   C-54635c2b62 (['medium']): Δ=-0.49pp CI[-0.60,-0.39] pW=3.14e-16 dz=-0.68 rt×1.00 → significantly_worse
+- **2026-08-23T20:18:24Z**   C-1cad4f213f (['medium']): Δ=-0.44pp CI[-0.53,-0.35] pW=3.14e-16 dz=-0.71 rt×1.00 → significantly_worse
+- **2026-08-23T20:18:24Z**   C-706d7d1525 (['medium']): Δ=-0.29pp CI[-0.36,-0.22] pW=4.57e-12 dz=-0.57 rt×1.00 → null_or_negative
+- **2026-08-23T20:18:24Z**   C-da446f5679 (['medium']): Δ=-0.48pp CI[-0.59,-0.38] pW=3.32e-15 dz=-0.66 rt×1.00 → significantly_worse
