@@ -82,3 +82,5 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-23T16:34:51Z**   C-5caf202052 (['medium']): Δ=-0.19pp CI[-0.27,-0.11] pW=7.56e-05 dz=-0.33 rt×1.00 → null_or_negative
 - **2026-08-23T16:34:51Z**   C-7fa81bb576 (['medium']): Δ=-0.32pp CI[-0.42,-0.22] pW=1.39e-08 dz=-0.48 rt×1.00 → significantly_worse
 - **2026-08-23T16:34:51Z**   C-c24cb2a6e7 (['medium']): Δ=-0.38pp CI[-0.48,-0.28] pW=2.12e-11 dz=-0.55 rt×1.00 → significantly_worse
+- **2026-08-23T16:50:34Z** campaign run started: phases=['explore'] budget=3.5h
+- **2026-08-23T16:50:34Z** PHASE explore FAILED: Director._replication_candidates() got an unexpected keyword argument 'k_new'

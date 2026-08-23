@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/shubhraj/Downloads/ai scientist/scripts/run_overnight.py", line 45, in main
+    d.phase_explore_round(k_new=6)
+  File "/Users/shubhraj/Downloads/ai scientist/ais/agents/director.py", line 419, in phase_explore_round
+    props = self._replication_candidates(k_new=2)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Director._replication_candidates() got an unexpected keyword argument 'k_new'
