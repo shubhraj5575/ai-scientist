@@ -115,3 +115,4 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-23T21:23:32Z**   C-7e9c469b93 (['medium']): Δ=-0.52pp CI[-0.66,-0.40] pW=1.8e-14 dz=-0.60 rt×1.00 → significantly_worse
 - **2026-08-23T21:50:26Z** campaign run started: phases=['scale', 'robust'] budget=2.0h
 - **2026-08-23T21:50:26Z** PHASE scale FAILED: benchmark_candidate produced 0 runs (suites=['scale']) — instance registry empty or suite filter matched nothing
+- **2026-08-23T21:56:30Z** batch robust_2026-08-23T21:50:28Z: nothing analysable (no baseline or no shared pairs)
