@@ -482,6 +482,15 @@ class Director:
         if not challengers:
             challengers = [dict(CHAMPION_SEED_CONFIG)]
         cands = []
+        # champion itself must run on structured for paired comparison
+        champ_row = self.db.one(
+            "SELECT config_json FROM candidates WHERE uid=?",
+            (self.champion_uid,))
+        cands.append(self.designer._wrap(
+            json.loads(champ_row["config_json"]), family="robustness_probe",
+            statement="Champion measured on structured distributions.",
+            rationale="Paired robustness comparison needs champion runs.",
+            expected_effect="reference", prediction="descriptive"))
         for i, cfg in enumerate(challengers):
             cands.append(self.designer._wrap(
                 cfg, family="robustness_probe",

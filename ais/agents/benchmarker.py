@@ -44,6 +44,10 @@ class BenchmarkEngineer:
         for s in SEEDS:
             specs.append(("clustered", STRUCTURED_N, s))
             specs.append(("grid", STRUCTURED_N, s))
+        from ..config import SCALE_NS
+        for n in SCALE_NS:
+            for s in (0, 1, 2):
+                specs.append(("uniform", n, s))
         for kind, n, seed in specs:
             inst = get_instance(kind, n, seed)
             iid = self.db.upsert_instance(inst)

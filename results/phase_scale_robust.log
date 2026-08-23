@@ -7,3 +7,9 @@ Traceback (most recent call last):
   File "/Users/shubhraj/Downloads/ai scientist/ais/agents/benchmarker.py", line 143, in benchmark_candidate
     raise RuntimeError(
 RuntimeError: benchmark_candidate produced 0 runs (suites=['scale']) — instance registry empty or suite filter matched nothing
+- **2026-08-23T21:50:26Z** campaign run started: phases=['scale', 'robust'] budget=2.0h
+- **2026-08-23T21:50:26Z** PHASE scale FAILED: benchmark_candidate produced 0 runs (suites=['scale']) — instance registry empty or suite filter matched nothing
+[phase scale] took 2s
+- **2026-08-23T21:56:30Z** batch robust_2026-08-23T21:50:28Z: nothing analysable (no baseline or no shared pairs)
+[phase robust] took 364s
+done
