@@ -121,3 +121,6 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-23T22:43:38Z** batch robust_2026-08-23T22:31:33Z: 2 analysed, 0 critiques, promotions=[]
 - **2026-08-23T22:43:38Z**   C-3f9cba2784 (['structured']): Δ=+0.00pp CI[+0.00,+0.00] pW=1 dz=0.00 rt×1.00 → no_change
 - **2026-08-23T22:43:38Z**   C-31e4c0b1a6 (['structured']): Δ=-0.69pp CI[-1.15,-0.31] pW=5.6e-08 dz=-0.30 rt×1.00 → significantly_worse
+- **2026-08-23T23:12:04Z** setup complete: 76 instances registered
+- **2026-08-23T23:12:04Z** campaign run started: phases=['scale'] budget=2.0h
+- **2026-08-23T23:30:06Z** scale study: {'C-006b20e16c': {'mean_delta_pp_vs_champ': -1.52, 'n_pairs': 18}, 'C-07d533c9b2': {'mean_delta_pp_vs_champ': -0.747, 'n_pairs': 18}, 'C-0ef37ec3bc': {'mean_delta_pp_vs_champ': -1.466, 'n_pairs': 18}}
