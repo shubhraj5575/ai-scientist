@@ -5,3 +5,7 @@ Traceback (most recent call last):
     props = self._replication_candidates(k_new=2)
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 TypeError: Director._replication_candidates() got an unexpected keyword argument 'k_new'
+- **2026-08-23T16:50:34Z** campaign run started: phases=['explore'] budget=3.5h
+- **2026-08-23T16:50:34Z** PHASE explore FAILED: Director._replication_candidates() got an unexpected keyword argument 'k_new'
+[phase explore] took 2s
+done

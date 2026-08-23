@@ -416,7 +416,7 @@ class Director:
     def phase_explore_round(self, k_new: int = 6):
         batch = f"explore_{now_iso()}"
         tried = {r["uid"] for r in self.db.query("SELECT uid FROM candidates")}
-        props = self._replication_candidates(k_new=2)
+        props = self._replication_candidates(k=2)
         props += self.designer.propose(self.champion_cfg, tried,
                                        k_new=k_new - len(props))
         accepted = self.run_batch(
