@@ -88,3 +88,24 @@ Designer now includes greedy assembly of components whose arms accumulated
 net-positive mean rewards over >=2 batches. Purpose: deliberately re-test
 moderate winners together (supports D11 replication path) instead of waiting
 for random mutation collisions.
+
+## D13 — Artifact A1: don't-look-bit leak in composite local search (2026-08-23 ~13:45Z)
+DISCOVERY PATH: explore-round "winners" (+0.11–0.13pp) all had
+perturbation=None (inert ILS loop), while batch-2's big losers (-1.8pp)
+differed mainly in operator ORDER — contradiction demanding investigation.
+ROOT CAUSE: or_opt consulted/SET the shared don't-look mask. Unlike 2-opt
+(whose move deltas change only at 4 splice endpoints, making endpoint
+masking sound), relocation profitability changes globally; masked cities
+never re-examined ⇒ premature convergence, order-dependent severity:
+(or_opt1,two_opt)=11345 vs (two_opt,or_opt1)=8704 on one n=100 instance.
+FIX: or-opt no longer consults/sets masks (still unmasks splice cities);
+composite driver resets mask each additional round. Regression tests added;
+Coder sanity gate now probes order-agreement automatically.
+IMPACT ASSESSMENT (integrity action):
+ - Champion (pure two_opt ILS) unaffected → prior paired comparisons vs it
+   remain internally valid as measurements.
+ - All pre-fix conclusions INVOLVING or_opt operators are quarantined:
+   "kicks worth ~1.8pp" (batch-2 losers were broken-LS confounded),
+   the +0.12–0.14pp or_opt cluster, and SA/LAHC interpretations from those
+   batches. Re-validation batch scheduled post-fix.
+LESSON: automated order-agreement probing now part of every candidate gate.

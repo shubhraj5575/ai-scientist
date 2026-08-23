@@ -144,6 +144,18 @@ def _apply_relocation(st: TourState, p: int, L: int, anchor: int):
 
 
 def or_opt_pass(st: TourState, lengths=(1, 2, 3)) -> bool:
+    """One full sweep of segment-relocation attempts over every start city.
+
+    NOTE ON DON'T-LOOK BITS: unlike 2-opt (whose move deltas change only at
+    the four splice endpoints, making endpoint-masking sound), a relocation
+    alters the profitability of moves for cities far from the splice points
+    through global length changes interacting with restricted candidate
+    lists. Empirically (see EXPERIMENTS.md, artifact investigation A1),
+    masking or-opt sweeps causes premature convergence (up to ~30% worse
+    tours depending on operator order). Therefore or-opt NEVER consults or
+    sets the mask; it does CLEAR mask bits of splice-involved cities so that
+    a subsequent two_opt sweep rescans them.
+    """
     tour, pos, D, nl, mask, n = st.tour, st.pos, st.Dl, st.nl, st.mask, st.n
     improved = False
     for L in lengths:
@@ -151,8 +163,6 @@ def or_opt_pass(st: TourState, lengths=(1, 2, 3)) -> bool:
             continue
         for p in range(n):
             s0 = tour[p]
-            if mask[s0]:
-                continue
             s_last = tour[(p + L - 1) % n]
             prev = tour[p - 1]
             after = tour[(p + L) % n]
@@ -175,13 +185,14 @@ def or_opt_pass(st: TourState, lengths=(1, 2, 3)) -> bool:
                         best_delta = delta
                         best_u = u
             if best_u >= 0:
+                pu = pos[best_u]
+                v_after = tour[(pu + 1) % n]
                 _apply_relocation(st, p, L, best_u)
-                for c in (prev, s0, s_last, after, best_u):
+                # splice cities must be re-examinable by other operators
+                for c in (prev, s0, s_last, after, best_u, v_after):
                     mask[c] = 0
                 st.moves += 1
                 improved = True
-            else:
-                mask[s0] = 1
     return improved
 
 
@@ -207,19 +218,28 @@ OPERATORS = {
 
 
 def run_local_search(st: TourState, operators=("two_opt",)) -> int:
-    """Apply operators round-robin until a full round changes nothing."""
+    """Apply operators round-robin until a full round changes nothing.
+
+    Soundness note: 2-opt's don't-look bits are only valid while the tour's
+    edges evolve exclusively through 2-opt moves. Composite drivers therefore
+    RESET the mask at the start of every additional round; within a round,
+    or_opt keeps the invariant exact by unmasking precisely the splice cities
+    it touches.
+    """
     ops = [o for o in operators if o != "none"]
     if not ops:
         return 0
     rounds = 0
     while True:
+        rounds += 1
+        if rounds > 1:
+            st.mask = bytearray(st.n)
         any_change = False
         for op in ops:
             before = st.moves
             OPERATORS[op](st)
             if st.moves != before:
                 any_change = True
-        rounds += 1
         if not any_change or rounds > 50:
             break
     return rounds

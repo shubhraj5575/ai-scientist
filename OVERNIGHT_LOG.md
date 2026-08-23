@@ -49,3 +49,7 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-23T13:34:12Z**   C-daf5979f68 (['medium']): Δ=+0.13pp CI[+0.06,+0.19] pW=9.92e-05 dz=0.28 rt×1.00 → significant_but_not_practical
 - **2026-08-23T13:34:12Z**   C-3f9cba2784 (['medium']): Δ=+0.13pp CI[+0.07,+0.20] pW=5.89e-05 dz=0.29 rt×1.00 → significant_but_not_practical
 - **2026-08-23T13:34:12Z**   C-5c7ddc5f9e (['medium']): Δ=+0.12pp CI[+0.06,+0.18] pW=7.36e-05 dz=0.28 rt×1.00 → significant_but_not_practical
+- **2026-08-23T13:50Z** ARTIFACT A1 FOUND AND FIXED (see DECISIONS D13):
+  don't-look-bit leak in or-opt caused order-dependent premature convergence
+  (up to ~30%). 13 pre-fix candidates quarantined; Coder gate extended with
+  automatic LS-soundness probe; regression tests added (25 passing).
