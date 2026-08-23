@@ -92,3 +92,10 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-23T18:46:55Z**   C-0ef37ec3bc (['medium']): Δ=-0.09pp CI[-0.16,-0.03] pW=0.0182 dz=-0.20 rt×1.00 → null_or_negative
 - **2026-08-23T18:46:55Z**   C-23fad5d789 (['medium']): Δ=-0.19pp CI[-0.28,-0.11] pW=0.000188 dz=-0.32 rt×1.00 → null_or_negative
 - **2026-08-23T18:46:55Z**   C-488b7368fe (['medium']): Δ=+0.12pp CI[+0.05,+0.19] pW=0.000507 dz=0.25 rt×1.00 → significant_but_not_practical
+- **2026-08-23T18:47Z** MILESTONE — first rule-gated champion promotion:
+  C-3f9cba2784 promoted via D11 replication path (Δ=+0.20pp CI[+0.13,+0.26],
+  p=4.7e-10, dz=0.44, replicated in 2 independent batches vs prior champion).
+  Runner-up C-daf5979f68 also replicated (+0.16pp). New champion = NN +
+  [two_opt→or_opt1] LS + double-bridge kick from current + SA(T0=0.5%·len,
+  α=0.90) acceptance. Full loop demonstrated: hypothesis → evidence →
+  replication → promotion.
