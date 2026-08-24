@@ -1,6 +1,6 @@
 # Experiments
 
-_Regenerated from `results/experiments.db` at 2026-08-24T01:52:28Z._
+_Regenerated from `results/experiments.db` at 2026-08-24T04:56:26Z._
 
 ## Campaign summary
 
@@ -8,7 +8,7 @@ _Regenerated from `results/experiments.db` at 2026-08-24T01:52:28Z._
 |---|---|
 | candidates registered | 56 |
 | pre-registered hypotheses | 18 |
-| raw runs | 15181 |
+| raw runs | 15978 |
 | champion promotions (rule-based) | 1 |
 
 ## Champion lineage (each step = statistically-gated promotion)
