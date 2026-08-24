@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 .pytest_cache/
-results/*.db*
+results/*.db-wal
+results/*.db-shm
 data/
 .DS_Store
