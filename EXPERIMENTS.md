@@ -1,6 +1,6 @@
 # Experiments
 
-_Regenerated from `results/experiments.db` at 2026-08-23T21:50:34Z._
+_Regenerated from `results/experiments.db` at 2026-08-24T01:52:28Z._
 
 ## Campaign summary
 
@@ -8,7 +8,7 @@ _Regenerated from `results/experiments.db` at 2026-08-23T21:50:34Z._
 |---|---|
 | candidates registered | 56 |
 | pre-registered hypotheses | 18 |
-| raw runs | 14613 |
+| raw runs | 15181 |
 | champion promotions (rule-based) | 1 |
 
 ## Champion lineage (each step = statistically-gated promotion)
@@ -83,6 +83,8 @@ _Regenerated from `results/experiments.db` at 2026-08-23T21:50:34Z._
 | explore_2026-08-23T20:18:26Z | `C-e06b471e93` | medium | 180 | 0.14 | 0.71 | **-0.56** [-0.68,-0.45] | 0.0000 | 0.0000 | -0.69 | 0.16 | 1.00 | significantly_worse |
 | explore_2026-08-23T20:18:26Z | `C-ffa5e3a2ee` | medium | 180 | 0.14 | 0.68 | **-0.54** [-0.66,-0.43] | 0.0000 | 0.0000 | -0.71 | 0.18 | 1.00 | significantly_worse |
 | explore_2026-08-23T20:18:26Z | `C-7e9c469b93` | medium | 180 | 0.14 | 0.67 | **-0.52** [-0.66,-0.40] | 0.0000 | 0.0000 | -0.60 | 0.19 | 1.00 | significantly_worse |
+| robust_2026-08-23T22:31:33Z | `C-3f9cba2784` | structured | 120 | 0.08 | 0.08 | **0.00** [0.00,0.00] | 1.0000 | 1.0000 | 0.00 | 0.00 | 1.00 | no_change |
+| robust_2026-08-23T22:31:33Z | `C-31e4c0b1a6` | structured | 120 | 0.08 | 0.77 | **-0.69** [-1.15,-0.31] | 0.0000 | 0.0015 | -0.30 | 0.31 | 1.00 | significantly_worse |
 
 ## Experiment graph
 
@@ -113,7 +115,7 @@ graph TD
   C-31e4c0b1a6 --> "C-5c7ddc5f9e [bandit\ninvalidated_artifact_A1]"
   C-31e4c0b1a6 --> "C-6485ea2a2e [revalidation\nbenchmarked]"
   C-31e4c0b1a6 --> "C-5f9f2c35b6 [revalidation\nbenchmarked]"
-  C-31e4c0b1a6 --> "C-3f9cba2784 [revalidation\npromoted]"
+  C-31e4c0b1a6 --> "C-3f9cba2784 [revalidation\nbenchmarked]"
   C-31e4c0b1a6 --> "C-daf5979f68 [revalidation\nbenchmarked]"
   C-31e4c0b1a6 --> "C-1abefc1e0f [mutation\nbenchmarked]"
   C-31e4c0b1a6 --> "C-b56b49cdc8 [mutation\nbenchmarked]"
@@ -151,7 +153,6 @@ graph TD
 
 | uid | statement | expected | prediction |
 |---|---|---|---|
-| `H-0002` | Replication attempt for C-daf5979f68 (prior best Δ=0.18pp). | repeat of prior effect size | holm_reject and delta>=0.15pp again |
 | `H-0003` | Bandit-selected component combination matches or beats champion. | Exploitation step; small positive drift expected if bandit estimates are stable. | No regression vs champion beyond noise. |
 | `H-0004` | Bandit-selected component combination matches or beats champion. | Exploitation step; small positive drift expected if bandit estimates are stable. | No regression vs champion beyond noise. |
 | `H-0005` | Bandit-selected component combination matches or beats champion. | Exploitation step; small positive drift expected if bandit estimates are stable. | No regression vs champion beyond noise. |
@@ -168,10 +169,12 @@ graph TD
 | `H-0016` | Bandit-selected component combination matches or beats champion. | Exploitation step; small positive drift expected if bandit estimates are stable. | No regression vs champion beyond noise. |
 | `H-0017` | Bandit-selected component combination matches or beats champion. | Exploitation step; small positive drift expected if bandit estimates are stable. | No regression vs champion beyond noise. |
 | `H-0018` | Bandit-selected component combination matches or beats champion. | Exploitation step; small positive drift expected if bandit estimates are stable. | No regression vs champion beyond noise. |
-| `H-0001` | Challenger 0 generalises to structured distributions. | unknown | descriptive |
+| `H-0001` | Champion measured on structured distributions. | reference | descriptive |
+| `H-0002` | Challenger 0 generalises to structured distributions. | unknown | descriptive |
 
 ## Critic failure analyses (why candidates were not adopted)
 
+- `C-3f9cba2784`: failure_analysis: delta_pp=+0.000 [+0.000,+0.000]; win=0.00; dz=0.00; p_w=1; rt_x=1.00 => no_change
 - `C-734451b438`: failure_analysis: delta_pp=-0.002 [-0.049,+0.046]; win=0.44; dz=-0.01; p_w=0.684; rt_x=1.00 => no_change
 - `C-488b7368fe`: failure_analysis: delta_pp=+0.122 [+0.051,+0.193]; win=0.56; dz=0.25; p_w=0.000507; rt_x=1.00 => significant_but_not_practical
 - `C-daf5979f68`: failure_analysis: delta_pp=+0.157 [+0.093,+0.223]; win=0.58; dz=0.35; p_w=1.73e-06; rt_x=1.00 => significant_but_not_practical
