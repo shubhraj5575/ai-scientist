@@ -124,3 +124,10 @@ Autonomous research campaign log. Newest entries at bottom.
 - **2026-08-23T23:12:04Z** setup complete: 76 instances registered
 - **2026-08-23T23:12:04Z** campaign run started: phases=['scale'] budget=2.0h
 - **2026-08-23T23:30:06Z** scale study: {'C-006b20e16c': {'mean_delta_pp_vs_champ': -1.52, 'n_pairs': 18}, 'C-07d533c9b2': {'mean_delta_pp_vs_champ': -0.747, 'n_pairs': 18}, 'C-0ef37ec3bc': {'mean_delta_pp_vs_champ': -1.466, 'n_pairs': 18}}
+- **2026-08-24T05:55Z** PROMOTION ROBUSTNESS VERIFIED: at 3x budget (9s),
+  champion C-3f9cba2784 still beats pre-promotion champion by +0.16pp
+  [CI +0.11,+0.22], p=1.0e-08, win rate 0.60 (216 paired runs). Effect
+  shrinks 0.20->0.16pp with longer budgets — consistent with convergence
+  pressure; direction and significance survive.
+- Campaign totals: 56 candidates, ~17k runs, 1 rule-gated promotion,
+  2 artifacts found/fixed/quarantined, negative results logged throughout.

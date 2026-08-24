@@ -13,10 +13,18 @@ a reference solution.
 
 ## Status
 
+**Campaign outcome (see [FINAL_REPORT.md](FINAL_REPORT.md)):**
+56 candidates · ~16.4k raw runs · 1 replication-gated champion promotion
+(SA + composite 2-opt→Or-opt ILS, +0.20pp mean excess over classical seed,
+p=4.7e-10; survives 3× budget at +0.16pp; generalises across distributions).
+One serious measurement artifact was caught by the system's own critique
+loop (stale don't-look bits in Or-opt), fixed, and all contaminated
+conclusions quarantined and re-measured — documented in
+[DECISIONS.md](DECISIONS.md) D13.
+
 Live research log: [`OVERNIGHT_LOG.md`](OVERNIGHT_LOG.md) ·
 Current evidence table: [`EXPERIMENTS.md`](EXPERIMENTS.md) ·
-Design rationale: [`DECISIONS.md`](DECISIONS.md) ·
-Synthesis: [`FINAL_REPORT.md`](FINAL_REPORT.md)
+Design rationale: [`DECISIONS.md`](DECISIONS.md)
 
 ## Quick start
 
